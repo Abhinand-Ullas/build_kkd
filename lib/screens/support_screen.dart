@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ReportScreen extends StatelessWidget {
-  const ReportScreen({super.key});
+class SupportScreen extends StatelessWidget {
+  const SupportScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       body: SafeArea(child: Container()),
       appBar: AppBar(
-        title: Text("report screen"),
+        title: Center(child: Text("support screen")),
       ),
     );
   }
