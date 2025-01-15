@@ -48,7 +48,7 @@ class ExploreScreen extends StatelessWidget {
       'description': 'Famous for traditional Malabar cuisine',
       'location': 'https://maps.app.goo.gl/rB2JsxJyEUznDQFQ6',
       'image':
-          'https://paragonrestaurant.in/wp-content/uploads/2023/06/paragon-about.jpg'
+          'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/64/1a/cb/hotel-paragon-restaurant.jpg?w=700&h=400&s=1'
     },
     {
       'name': 'Rahmat hotel',
