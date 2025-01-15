@@ -36,8 +36,7 @@ class SupportPage extends StatelessWidget {
                 width: 357,
                 child: MaterialButton(
                     onPressed: () async {
-                      const phoneNumber =
-                          'tel:9746438697'; // Replace with your phone number
+                      const phoneNumber = 'tel:9746438697';
                       final Uri uri = Uri.parse(phoneNumber);
                       if (await canLaunchUrl(uri)) {
                         await launchUrl(uri);
@@ -66,33 +65,37 @@ class SupportPage extends StatelessWidget {
             ),
             Container(
               width: screenWidth,
-              height: screenHeight,
+              height: screenHeight * 0.6,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(16.0),
                 child: GridView.count(
-                  crossAxisCount: 2, // Two items per row
+                  crossAxisCount: 2,
                   crossAxisSpacing: 16.0,
                   mainAxisSpacing: 16.0,
                   children: [
                     Box(
                       title: "Hospital",
-                      imagePath:
-                          "assets/images/hospital.png", // Replace with your asset
+                      imagePath: "assets/images/hospital.png",
+                      address:
+                          "https://kozhikode.nic.in/en/public-utility-category/hospitals/",
                     ),
                     Box(
                       title: "Bank",
-                      imagePath:
-                          "assets/images/bank.png", // Replace with your asset
+                      imagePath: "assets/images/bank.png",
+                      address:
+                          "https://kozhikode.nic.in/en/public-utility-category/banks/",
                     ),
                     Box(
-                      title: "Government",
-                      imagePath:
-                          "assets/images/government.png", // Replace with your asset
+                      title: "Municipalities",
+                      imagePath: "assets/images/government.png",
+                      address:
+                          "https://kozhikode.nic.in/en/public-utility-category/municipality/",
                     ),
                     Box(
-                      title: "Certificate",
-                      imagePath:
-                          "assets/images/certificate.png", // Replace with your asset
+                      title: "Documents",
+                      imagePath: "assets/images/certificate.png",
+                      address:
+                          "https://kozhikode.nic.in/en/service-category/certificates/",
                     ),
                   ],
                 ),
