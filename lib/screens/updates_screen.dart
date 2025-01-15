@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 class UpdatesScreen extends StatefulWidget {
   @override
@@ -11,22 +12,47 @@ class UpdatesScreen extends StatefulWidget {
 }
 
 class _UpdatesScreenState extends State<UpdatesScreen> {
-  final String apiKey =
-      'KNllPM6B6IFIQe59ghDK02_9GK3uYN55kaapV4jpaNg'; // Replace with your API key
+  final String apiKey = 'KNllPM6B6IFIQe59ghDK02_9GK3uYN55kaapV4jpaNg';
+  final String weatherApiKey = 'YOUR_OPENWEATHER_API_KEY';
   TextEditingController startLocationController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
   String? trafficInfo;
   bool isLoading = false;
+  bool isLoadingWeather = false;
   LatLng? selectedStartLocation;
   LatLng? selectedDestLocation;
-
-  // Default center at Kozhikode
+  Map<String, dynamic>? weatherData;
   final LatLng kozhikodeLocation = LatLng(11.2588, 75.7804);
 
   @override
   void initState() {
     super.initState();
     _getCurrentLocation();
+    _getWeatherData();
+  }
+
+  Future<void> _getWeatherData() async {
+    setState(() {
+      isLoadingWeather = true;
+    });
+
+    try {
+      final response = await http.get(Uri.parse(
+        'https://api.openweathermap.org/data/2.5/weather?lat=11.2588&lon=75.7804&units=metric&appid=$weatherApiKey'
+      ));
+
+      if (response.statusCode == 200) {
+        setState(() {
+          weatherData = json.decode(response.body);
+          isLoadingWeather = false;
+        });
+      }
+    } catch (e) {
+      print('Error getting weather: $e');
+      setState(() {
+        isLoadingWeather = false;
+      });
+    }
   }
 
   Future<void> _getCurrentLocation() async {
@@ -53,68 +79,199 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Traffic Updates'),
+        title: Text('Traffic & Weather Updates'),
         backgroundColor: Color(0xFFE8F5E9),
         elevation: 0,
       ),
-      body: Container(
-        color: Color(0xFFE8F5E9),
-        padding: EdgeInsets.all(16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildLocationInput(
-                controller: startLocationController,
-                label: 'Start Location',
-                isStart: true,
-              ),
-              SizedBox(height: 16),
-              _buildLocationInput(
-                controller: destinationController,
-                label: 'Destination',
-                isStart: false,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: isLoading ? null : _getTrafficInfo,
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                  backgroundColor: Colors.green,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.blue.shade300, Colors.blue.shade600],
                 ),
-                child: isLoading
-                    ? SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(color: Colors.white),
-                      )
-                    : Text('Check Traffic'),
               ),
-              SizedBox(height: 20),
-              if (trafficInfo != null)
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 5,
+              child: isLoadingWeather
+                  ? Center(child: CircularProgressIndicator(color: Colors.white))
+                  : weatherData != null
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Kozhikode Weather',
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${weatherData!['main']['temp'].round()}°C',
+                                      style: TextStyle(
+                                        fontSize: 36,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      weatherData!['weather'][0]['description']
+                                          .toString()
+                                          .toUpperCase(),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Icon(
+                                  _getWeatherIcon(
+                                      weatherData!['weather'][0]['main']),
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                _buildWeatherInfo(
+                                  'Humidity',
+                                  '${weatherData!['main']['humidity']}%',
+                                  Icons.water_drop,
+                                ),
+                                _buildWeatherInfo(
+                                  'Wind',
+                                  '${weatherData!['wind']['speed']} m/s',
+                                  Icons.air,
+                                ),
+                                _buildWeatherInfo(
+                                  'Feels Like',
+                                  '${weatherData!['main']['feels_like'].round()}°C',
+                                  Icons.thermostat,
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : Center(
+                          child: Text(
+                            'Unable to load weather data',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+            ),
+            Container(
+              color: Color(0xFFE8F5E9),
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  _buildLocationInput(
+                    controller: startLocationController,
+                    label: 'Start Location',
+                    isStart: true,
+                  ),
+                  SizedBox(height: 16),
+                  _buildLocationInput(
+                    controller: destinationController,
+                    label: 'Destination',
+                    isStart: false,
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: isLoading ? null : _getTrafficInfo,
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(double.infinity, 50),
+                      backgroundColor: Colors.green,
+                    ),
+                    child: isLoading
+                        ? SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(color: Colors.white),
+                          )
+                        : Text('Check Traffic'),
+                  ),
+                  SizedBox(height: 20),
+                  if (trafficInfo != null)
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: Text(
-                    trafficInfo!,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-            ],
-          ),
+                      child: Text(
+                        trafficInfo!,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Widget _buildWeatherInfo(String label, String value, IconData icon) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.white),
+        SizedBox(height: 5),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.white70,
+          ),
+        ),
+      ],
+    );
+  }
+
+  IconData _getWeatherIcon(String mainCondition) {
+    switch (mainCondition.toLowerCase()) {
+      case 'clear':
+        return Icons.wb_sunny;
+      case 'clouds':
+        return Icons.cloud;
+      case 'rain':
+        return Icons.beach_access;
+      case 'thunderstorm':
+        return Icons.flash_on;
+      default:
+        return Icons.wb_sunny;
+    }
   }
 
   Widget _buildLocationInput({
@@ -177,10 +334,11 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                                 setState(() => isSearching = true);
                                 try {
                                   final searchUrl = Uri.parse(
-                                      'https://geocode.search.hereapi.com/v1/geocode'
-                                      '?q=${Uri.encodeComponent(value)}'
-                                      '&apiKey=$apiKey');
-
+                                    'https://geocode.search.hereapi.com/v1/geocode'
+                                    '?q=${Uri.encodeComponent(value)}'
+                                    '&apiKey=$apiKey'
+                                  );
+                                  
                                   final response = await http.get(searchUrl);
                                   if (response.statusCode == 200) {
                                     final data = json.decode(response.body);
@@ -310,17 +468,18 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
     bool isStart,
   ) async {
     try {
-      final url =
-          Uri.parse('https://revgeocode.search.hereapi.com/v1/revgeocode'
-              '?at=$latitude,$longitude'
-              '&lang=en-US'
-              '&apiKey=$apiKey');
+      final url = Uri.parse(
+        'https://revgeocode.search.hereapi.com/v1/revgeocode'
+        '?at=$latitude,$longitude'
+        '&lang=en-US'
+        '&apiKey=$apiKey'
+      );
 
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final address = data['items'][0]['address']['label'];
-
+        
         setState(() {
           if (isStart) {
             startLocationController.text = address;
@@ -353,45 +512,43 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
         throw Exception('Locations not properly selected');
       }
 
-      // Get current time route
-      final routeUrl = Uri.parse('https://router.hereapi.com/v8/routes'
-          '?transportMode=car'
-          '&origin=${selectedStartLocation!.latitude},${selectedStartLocation!.longitude}'
-          '&destination=${selectedDestLocation!.latitude},${selectedDestLocation!.longitude}'
-          '&return=summary,polyline,actions,instructions'
-          '&departureTime=any'
-          '&spans=duration,length'
-          '&apiKey=$apiKey');
+      final routeUrl = Uri.parse(
+        'https://router.hereapi.com/v8/routes'
+        '?transportMode=car'
+        '&origin=${selectedStartLocation!.latitude},${selectedStartLocation!.longitude}'
+        '&destination=${selectedDestLocation!.latitude},${selectedDestLocation!.longitude}'
+        '&return=summary,polyline,actions,instructions'
+        '&departureTime=any'
+        '&spans=duration,length'
+        '&apiKey=$apiKey'
+      );
 
       final currentResponse = await http.get(routeUrl);
-
-      // Get typical time route (without traffic)
-      final typicalRouteUrl = Uri.parse('https://router.hereapi.com/v8/routes'
-          '?transportMode=car'
-          '&origin=${selectedStartLocation!.latitude},${selectedStartLocation!.longitude}'
-          '&destination=${selectedDestLocation!.latitude},${selectedDestLocation!.longitude}'
-          '&return=summary'
-          '&traffic=disabled'
-          '&apiKey=$apiKey');
-
+      
+      final typicalRouteUrl = Uri.parse(
+        'https://router.hereapi.com/v8/routes'
+        '?transportMode=car'
+        '&origin=${selectedStartLocation!.latitude},${selectedStartLocation!.longitude}'
+        '&destination=${selectedDestLocation!.latitude},${selectedDestLocation!.longitude}'
+        '&return=summary'
+        '&traffic=disabled'
+        '&apiKey=$apiKey'
+      );
+      
       final typicalResponse = await http.get(typicalRouteUrl);
 
-      if (currentResponse.statusCode == 200 &&
-          typicalResponse.statusCode == 200) {
+      if (currentResponse.statusCode == 200 && typicalResponse.statusCode == 200) {
         final currentData = json.decode(currentResponse.body);
         final typicalData = json.decode(typicalResponse.body);
 
-        if (currentData['routes']?.isNotEmpty &&
-            typicalData['routes']?.isNotEmpty) {
+        if (currentData['routes']?.isNotEmpty && typicalData['routes']?.isNotEmpty) {
           final currentRoute = currentData['routes'][0]['sections'][0];
           final typicalRoute = typicalData['routes'][0]['sections'][0];
 
-          final distance =
-              (currentRoute['summary']['length'] / 1000).toStringAsFixed(2);
+          final distance = (currentRoute['summary']['length'] / 1000).toStringAsFixed(2);
           final currentDuration = (currentRoute['summary']['duration'] / 60);
           final typicalDuration = (typicalRoute['summary']['duration'] / 60);
-
-          // Calculate traffic severity
+          
           final trafficDelay = currentDuration - typicalDuration;
           String trafficStatus;
           if (trafficDelay <= 1) {

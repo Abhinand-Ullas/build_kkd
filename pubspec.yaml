@@ -20,6 +20,7 @@ dependencies:
   url_launcher: # For user location
   http: ^1.1.0
   flutter_dotenv: ^5.0.2
+  weather_icons: ^3.0.0
 
 dev_dependencies:
   flutter_test:
