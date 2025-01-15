@@ -18,6 +18,8 @@ dependencies:
   latlong2: ^0.9.0 # For handling coordinates
   geolocator: ^10.1.0
   url_launcher: # For user location
+  http: ^1.1.0
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:

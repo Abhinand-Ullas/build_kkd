@@ -16,6 +16,7 @@ class Box extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: GestureDetector(
+
         onTap: () async {
           String url = address; // Replace with your URL
           final Uri uri = Uri.parse(url);

@@ -38,10 +38,8 @@ class ExploreScreen extends StatelessWidget {
       'image':
           'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/75/92/24/kariyathumpara.jpg?w=1200&h=-1&s=1'
     },
-    // Add more places here
   ];
 
-  // Data for food spots
   final List<Map<String, String>> foodSpots = [
     {
       'name': 'Paragon Restaurant',
@@ -58,113 +56,131 @@ class ExploreScreen extends StatelessWidget {
       'image':
           'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/7b/0a/51/hotel-rahamth.jpg?w=900&h=-1&s=1'
     },
-
-    // Add more food spots here
   ];
-// ... keep existing imports and data ...
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = Color.fromARGB(255, 227, 252, 222);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kerala Tourism Guide'),
+        backgroundColor: backgroundColor,
+        title: Text("Let's Explore Kozhikode"),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Container(
+            color: Color.fromARGB(255, 132, 155, 102),
+            height: 2.0,
+          ),
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Places to Visit',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 16),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: places.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    margin: EdgeInsets.only(bottom: 12),
-                    child: InkWell(
-                      onTap: () => _showDetails(context, places[index]),
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(4)),
-                            child: Image.network(
-                              places[index]['image']!,
-                              height: 180,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  Container(
+      body: Container(
+        color: backgroundColor,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Places to Visit',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: places.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      color: backgroundColor,
+                      elevation: 0,
+                      margin: EdgeInsets.only(bottom: 12),
+                      child: InkWell(
+                        onTap: () => _showDetails(context, places[index]),
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Image.network(
+                                places[index]['image']!,
                                 height: 180,
-                                color: Colors.grey[300],
-                                child: Icon(Icons.image, size: 50),
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
+                                  height: 180,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Icon(Icons.image, size: 50),
+                                ),
                               ),
                             ),
-                          ),
-                          ListTile(
-                            title: Text(
-                              places[index]['name']!,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 24),
-              Text(
-                'Food Spots',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 16),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: foodSpots.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    margin: EdgeInsets.only(bottom: 12),
-                    child: InkWell(
-                      onTap: () => _showDetails(context, foodSpots[index]),
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(4)),
-                            child: Image.network(
-                              foodSpots[index]['image']!,
-                              height: 180,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  Container(
-                                height: 180,
-                                color: Colors.grey[300],
-                                child: Icon(Icons.image, size: 50),
+                            ListTile(
+                              title: Text(
+                                places[index]['name']!,
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
-                          ),
-                          ListTile(
-                            title: Text(
-                              foodSpots[index]['name']!,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ],
+                    );
+                  },
+                ),
+                SizedBox(height: 24),
+                Text(
+                  'Food Spots',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: foodSpots.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      color: backgroundColor,
+                      elevation: 0,
+                      margin: EdgeInsets.only(bottom: 12),
+                      child: InkWell(
+                        onTap: () => _showDetails(context, foodSpots[index]),
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Image.network(
+                                foodSpots[index]['image']!,
+                                height: 180,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
+                                  height: 180,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Icon(Icons.image, size: 50),
+                                ),
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                foodSpots[index]['name']!,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -176,7 +192,7 @@ class ExploreScreen extends StatelessWidget {
       context: context,
       builder: (context) => Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(5),
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -184,14 +200,17 @@ class ExploreScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                borderRadius: BorderRadius.circular(5),
                 child: Image.network(
                   item['image']!,
                   height: 200,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(
                     height: 200,
-                    color: Colors.grey[300],
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                     child: Icon(Icons.image, size: 50),
                   ),
                 ),
