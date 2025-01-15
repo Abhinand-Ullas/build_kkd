@@ -13,7 +13,7 @@ class UpdatesScreen extends StatefulWidget {
 
 class _UpdatesScreenState extends State<UpdatesScreen> {
   final String apiKey = 'KNllPM6B6IFIQe59ghDK02_9GK3uYN55kaapV4jpaNg';
-  final String weatherApiKey = 'YOUR_OPENWEATHER_API_KEY';
+  final String weatherApiKey = '81ea6f1a42a39b268ff45e79139fffdb';
   TextEditingController startLocationController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
   String? trafficInfo;
@@ -38,8 +38,7 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
 
     try {
       final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?lat=11.2588&lon=75.7804&units=metric&appid=$weatherApiKey'
-      ));
+          'https://api.openweathermap.org/data/2.5/weather?lat=11.2588&lon=75.7804&units=metric&appid=$weatherApiKey'));
 
       if (response.statusCode == 200) {
         setState(() {
@@ -97,7 +96,8 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                 ),
               ),
               child: isLoadingWeather
-                  ? Center(child: CircularProgressIndicator(color: Colors.white))
+                  ? Center(
+                      child: CircularProgressIndicator(color: Colors.white))
                   : weatherData != null
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,7 +201,8 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                         ? SizedBox(
                             height: 20,
                             width: 20,
-                            child: CircularProgressIndicator(color: Colors.white),
+                            child:
+                                CircularProgressIndicator(color: Colors.white),
                           )
                         : Text('Check Traffic'),
                   ),
@@ -334,11 +335,10 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                                 setState(() => isSearching = true);
                                 try {
                                   final searchUrl = Uri.parse(
-                                    'https://geocode.search.hereapi.com/v1/geocode'
-                                    '?q=${Uri.encodeComponent(value)}'
-                                    '&apiKey=$apiKey'
-                                  );
-                                  
+                                      'https://geocode.search.hereapi.com/v1/geocode'
+                                      '?q=${Uri.encodeComponent(value)}'
+                                      '&apiKey=$apiKey');
+
                                   final response = await http.get(searchUrl);
                                   if (response.statusCode == 200) {
                                     final data = json.decode(response.body);
@@ -468,18 +468,17 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
     bool isStart,
   ) async {
     try {
-      final url = Uri.parse(
-        'https://revgeocode.search.hereapi.com/v1/revgeocode'
-        '?at=$latitude,$longitude'
-        '&lang=en-US'
-        '&apiKey=$apiKey'
-      );
+      final url =
+          Uri.parse('https://revgeocode.search.hereapi.com/v1/revgeocode'
+              '?at=$latitude,$longitude'
+              '&lang=en-US'
+              '&apiKey=$apiKey');
 
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final address = data['items'][0]['address']['label'];
-        
+
         setState(() {
           if (isStart) {
             startLocationController.text = address;
@@ -512,43 +511,42 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
         throw Exception('Locations not properly selected');
       }
 
-      final routeUrl = Uri.parse(
-        'https://router.hereapi.com/v8/routes'
-        '?transportMode=car'
-        '&origin=${selectedStartLocation!.latitude},${selectedStartLocation!.longitude}'
-        '&destination=${selectedDestLocation!.latitude},${selectedDestLocation!.longitude}'
-        '&return=summary,polyline,actions,instructions'
-        '&departureTime=any'
-        '&spans=duration,length'
-        '&apiKey=$apiKey'
-      );
+      final routeUrl = Uri.parse('https://router.hereapi.com/v8/routes'
+          '?transportMode=car'
+          '&origin=${selectedStartLocation!.latitude},${selectedStartLocation!.longitude}'
+          '&destination=${selectedDestLocation!.latitude},${selectedDestLocation!.longitude}'
+          '&return=summary,polyline,actions,instructions'
+          '&departureTime=any'
+          '&spans=duration,length'
+          '&apiKey=$apiKey');
 
       final currentResponse = await http.get(routeUrl);
-      
-      final typicalRouteUrl = Uri.parse(
-        'https://router.hereapi.com/v8/routes'
-        '?transportMode=car'
-        '&origin=${selectedStartLocation!.latitude},${selectedStartLocation!.longitude}'
-        '&destination=${selectedDestLocation!.latitude},${selectedDestLocation!.longitude}'
-        '&return=summary'
-        '&traffic=disabled'
-        '&apiKey=$apiKey'
-      );
-      
+
+      final typicalRouteUrl = Uri.parse('https://router.hereapi.com/v8/routes'
+          '?transportMode=car'
+          '&origin=${selectedStartLocation!.latitude},${selectedStartLocation!.longitude}'
+          '&destination=${selectedDestLocation!.latitude},${selectedDestLocation!.longitude}'
+          '&return=summary'
+          '&traffic=disabled'
+          '&apiKey=$apiKey');
+
       final typicalResponse = await http.get(typicalRouteUrl);
 
-      if (currentResponse.statusCode == 200 && typicalResponse.statusCode == 200) {
+      if (currentResponse.statusCode == 200 &&
+          typicalResponse.statusCode == 200) {
         final currentData = json.decode(currentResponse.body);
         final typicalData = json.decode(typicalResponse.body);
 
-        if (currentData['routes']?.isNotEmpty && typicalData['routes']?.isNotEmpty) {
+        if (currentData['routes']?.isNotEmpty &&
+            typicalData['routes']?.isNotEmpty) {
           final currentRoute = currentData['routes'][0]['sections'][0];
           final typicalRoute = typicalData['routes'][0]['sections'][0];
 
-          final distance = (currentRoute['summary']['length'] / 1000).toStringAsFixed(2);
+          final distance =
+              (currentRoute['summary']['length'] / 1000).toStringAsFixed(2);
           final currentDuration = (currentRoute['summary']['duration'] / 60);
           final typicalDuration = (typicalRoute['summary']['duration'] / 60);
-          
+
           final trafficDelay = currentDuration - typicalDuration;
           String trafficStatus;
           if (trafficDelay <= 1) {
