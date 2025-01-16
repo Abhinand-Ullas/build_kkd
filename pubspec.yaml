@@ -21,6 +21,7 @@ dependencies:
   http: ^1.1.0
   flutter_dotenv: ^5.0.2
   google_nav_bar:
+  weather_icons: ^3.0.0
 
 dev_dependencies:
   flutter_test:
