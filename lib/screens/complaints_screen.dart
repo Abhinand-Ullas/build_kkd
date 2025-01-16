@@ -2,7 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:your_app_name/db/firebase_service.dart';
 import 'package:your_app_name/db/init_database.dart';
+class CustomFabLocation extends FloatingActionButtonLocation {
+  final double xOffset;
+  final double yOffset;
 
+  CustomFabLocation(this.xOffset, this.yOffset);
+
+  @override
+  Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
+    final double fabX = xOffset;
+    final double fabY = scaffoldGeometry.scaffoldSize.height - yOffset;
+    return Offset(fabX, fabY);
+  }
+}
 class ComplaintsPage extends StatefulWidget {
   @override
   _ComplaintsPageState createState() => _ComplaintsPageState();
@@ -125,10 +137,13 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
       floatingActionButton: selectedPanchayathId == null
           ? null
           : FloatingActionButton(
+              backgroundColor: Color(0xFF526732),
               onPressed: () => _showAddComplaintDialog(context),
               child: Icon(Icons.add),
-              tooltip: 'Add New Complaint',
+              tooltip: 'Add New Complaint', 
+              isExtended: true, 
             ),
+            floatingActionButtonLocation: CustomFabLocation(900, 150),
     );
   }
 
