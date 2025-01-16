@@ -17,13 +17,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(theme: ThemeData(
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.transparent)
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.transparent),         scaffoldBackgroundColor: Color(0xFFE8F5E9),
+
     ),
 
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: Color(0xFFE8F5E9)
-      ),
       home: SplashScreen(),
     );
   }
