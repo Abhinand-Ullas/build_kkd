@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:your_app_name/db/firebase_service.dart';
 import 'package:your_app_name/db/init_database.dart';
+
 class CustomFabLocation extends FloatingActionButtonLocation {
   final double xOffset;
   final double yOffset;
@@ -15,6 +16,7 @@ class CustomFabLocation extends FloatingActionButtonLocation {
     return Offset(fabX, fabY);
   }
 }
+
 class ComplaintsPage extends StatefulWidget {
   @override
   _ComplaintsPageState createState() => _ComplaintsPageState();
@@ -27,6 +29,8 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenH = MediaQuery.of(context).size.height;
+    final screenW = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Color(0xFFE8F5E9),
       appBar: AppBar(
@@ -140,10 +144,11 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
               backgroundColor: Color(0xFF526732),
               onPressed: () => _showAddComplaintDialog(context),
               child: Icon(Icons.add),
-              tooltip: 'Add New Complaint', 
-              isExtended: true, 
+              tooltip: 'Add New Complaint',
+              isExtended: true,
             ),
-            floatingActionButtonLocation: CustomFabLocation(900, 150),
+      floatingActionButtonLocation:
+          CustomFabLocation(screenW * 0.8, screenH * 0.25),
     );
   }
 
