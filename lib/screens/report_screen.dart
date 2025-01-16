@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:your_app_name/screens/complaints_screen.dart';
+
 // import 'package:your_app_name/screens/complaints_screen.dart';
 
 class ReportScreen extends StatefulWidget {
@@ -18,14 +20,7 @@ class _ReportScreenState extends State<ReportScreen> {
         backgroundColor: Color(0xFFE8F5E9),
         elevation: 0,
       ),
-      body: ListView(
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-   //       ComplaintsPage(),
-        ],
-      ),
+      body: ComplaintsPage(),
     );
   }
 }

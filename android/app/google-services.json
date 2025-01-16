@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "256502306152",
+    "project_id": "build-for-kkd",
+    "storage_bucket": "build-for-kkd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256502306152:android:ac1eb3992d7569d1a7f2dd",
+        "android_client_info": {
+          "package_name": "com.example.your_app_name"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvuII2ZLHOtkeK2Z1J6JJRmtITn0DJwxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
