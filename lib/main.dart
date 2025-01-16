@@ -9,18 +9,19 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   ); // Use the generated options);
   runApp(const MyApp());
-}   
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: ThemeData(
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.transparent),         scaffoldBackgroundColor: Color(0xFFE8F5E9),
-
-    ),
-
+    return MaterialApp(
+      theme: ThemeData(
+        bottomNavigationBarTheme:
+            BottomNavigationBarThemeData(backgroundColor: Colors.transparent),
+        scaffoldBackgroundColor: Color(0xFFE8F5E9),
+      ),
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     );
