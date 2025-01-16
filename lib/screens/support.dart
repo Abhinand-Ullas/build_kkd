@@ -10,6 +10,29 @@ class SupportPage extends StatelessWidget {
     final backgroundColor = Color(0xFFE8F5E9);
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    Future<void> _makePhoneCall(BuildContext context) async {
+      const phoneNumber = '+919746438697'; // Add the country code
+      final Uri launchUri = Uri(
+        scheme: 'tel',
+        path: phoneNumber,
+      );
+      try {
+        if (!await launchUrl(launchUri)) {
+          throw 'Could not launch phone call';
+        }
+      } catch (e) {
+        print('Error launching phone call: $e');
+        if (context.mounted) {
+          // Check if context is still valid
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Could not launch phone call. Please try again.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    }
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -40,7 +63,7 @@ class SupportPage extends StatelessWidget {
           child: ListView(
             children: [
               SizedBox(
-                height: 20,
+                height: 14,
               ),
               Center(
                 child: Container(
@@ -53,15 +76,7 @@ class SupportPage extends StatelessWidget {
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(15)),
                     child: MaterialButton(
-                        onPressed: () async {
-                          const phoneNumber = 'tel:9746438697';
-                          final Uri uri = Uri.parse(phoneNumber);
-                          if (await canLaunchUrl(uri)) {
-                            await launchUrl(uri);
-                          } else {
-                            throw 'Could not launch $phoneNumber';
-                          }
-                        },
+                        onPressed: () => _makePhoneCall(context),
                         child: Center(
                             child: Text("Contact Police",
                                 style: TextStyle(
@@ -70,7 +85,7 @@ class SupportPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
@@ -115,7 +130,7 @@ class SupportPage extends StatelessWidget {
                         title: "Documents",
                         imagePath: "assets/images/certificate.png",
                         address:
-                            "https://kozhikode.nic.in/en/service-category/certificates/",
+                            'https://kozhikode.nic.in/en/service-category/certificates/',
                       ),
                     ],
                   ),

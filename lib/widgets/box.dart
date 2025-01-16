@@ -8,6 +8,28 @@ class Box extends StatelessWidget {
 
   Box({required this.title, required this.imagePath, required this.address});
 
+  Future<void> _launchURL(BuildContext context) async {
+    final Uri uri = Uri.parse(address);
+    try {
+      if (!await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      )) {
+        throw 'Could not launch URL';
+      }
+    } catch (e) {
+      print('Error launching URL: $e');
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Could not open link. Please try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,16 +38,7 @@ class Box extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: GestureDetector(
-
-        onTap: () async {
-          String url = address; // Replace with your URL
-          final Uri uri = Uri.parse(url);
-          if (await canLaunchUrl(uri)) {
-            await launchUrl(uri);
-          } else {
-            throw 'Could not launch $url';
-          }
-        },
+        onTap: () => _launchURL(context),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -33,7 +46,10 @@ class Box extends StatelessWidget {
               flex: 3,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset(imagePath, fit: BoxFit.contain),
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             Expanded(
