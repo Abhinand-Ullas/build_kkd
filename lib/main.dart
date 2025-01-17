@@ -17,16 +17,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = ColorScheme.fromSeed(
-      brightness: MediaQuery.platformBrightnessOf(context),
       seedColor: Color.fromARGB(255, 232, 245, 233),
     );
     return MaterialApp(
       theme: ThemeData(
+          brightness: Brightness.light,
+          textTheme: ThemeData.light().textTheme.apply(
+                bodyColor: Colors.black,
+                displayColor: Colors.black,
+              ),
           colorScheme: colorScheme,
           bottomNavigationBarTheme:
               BottomNavigationBarThemeData(backgroundColor: Colors.transparent),
+          cardColor: Color.fromARGB(255, 212, 246, 167),
           scaffoldBackgroundColor: Color(0xFFE8F5E9),
           dialogBackgroundColor: Color.fromARGB(255, 212, 246, 167)),
+      themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     );
