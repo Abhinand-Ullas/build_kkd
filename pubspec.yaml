@@ -1,5 +1,5 @@
-name: your_app_name
-description: A new Flutter project.
+name: Calicut_compass
+description: An android app that includes some really cool aspects about kozhikode with pretty helpful services.The app is under development
 
 # Specify Flutter SDK version
 environment:
@@ -24,6 +24,7 @@ dependencies:
   weather_icons: ^3.0.0
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0 # For code linting
@@ -33,3 +34,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+
+flutter_icons:
+  android: true
+  image_path: "assets/images/icon.png"    # Path to your icon file

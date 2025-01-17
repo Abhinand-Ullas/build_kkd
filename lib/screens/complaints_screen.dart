@@ -1,7 +1,6 @@
+import 'package:Calicut_compass/db/firebase_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:your_app_name/db/firebase_service.dart';
-import 'package:your_app_name/db/init_database.dart';
 
 class CustomFabLocation extends FloatingActionButtonLocation {
   final double xOffset;

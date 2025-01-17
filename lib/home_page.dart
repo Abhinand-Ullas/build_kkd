@@ -1,11 +1,9 @@
+import 'package:Calicut_compass/screens/explore_screen.dart';
+import 'package:Calicut_compass/screens/report_screen.dart';
+import 'package:Calicut_compass/screens/support.dart';
+import 'package:Calicut_compass/screens/updates_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:your_app_name/home_body.dart';
-import 'package:your_app_name/screens/explore_screen.dart';
-import 'package:your_app_name/screens/report_screen.dart';
-import 'package:your_app_name/screens/support.dart';
-import 'package:your_app_name/screens/support_screen.dart';
-import 'package:your_app_name/screens/updates_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

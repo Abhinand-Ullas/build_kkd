@@ -1,6 +1,6 @@
+import 'package:Calicut_compass/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:your_app_name/firebase_options.dart';
 import 'splash_screen.dart';
 
 void main() async {

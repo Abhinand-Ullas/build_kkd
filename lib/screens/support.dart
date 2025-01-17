@@ -1,6 +1,6 @@
+import 'package:Calicut_compass/widgets/box.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:your_app_name/widgets/box.dart';
 
 class SupportPage extends StatelessWidget {
   SupportPage({super.key});
