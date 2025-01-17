@@ -78,9 +78,19 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Traffic & Weather Updates'),
+        title: Text(
+          'Updates',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Color(0xFFE8F5E9),
         elevation: 0,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Container(
+            color: Color.fromARGB(255, 132, 155, 102),
+            height: 2.0,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -97,6 +107,7 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
               ),
               child: isLoadingWeather
                   ? Center(
+                      heightFactor: 5.55,
                       child: CircularProgressIndicator(color: Colors.white))
                   : weatherData != null
                       ? Column(
@@ -173,6 +184,9 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
+            ),
+            SizedBox(
+              height: 14,
             ),
             Container(
               color: Color(0xFFE8F5E9),
@@ -293,7 +307,7 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(5),
               ),
               suffixIcon: Icon(Icons.map),
             ),
@@ -315,12 +329,15 @@ class _UpdatesScreenState extends State<UpdatesScreen> {
           builder: (context, setState) {
             return Dialog(
               child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                ),
                 height: MediaQuery.of(context).size.height * 0.8,
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(10.0),
                       child: Column(
                         children: [
                           TextField(

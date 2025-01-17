@@ -10,8 +10,7 @@ class ExploreScreen extends StatelessWidget {
           '''HiLITE Mall is the most exclusive shopping mall and entertainment center.
        Located in an area that is best known for its high-end stores and restaurants.''',
       'location': 'https://maps.app.goo.gl/jLWzrHbni2ty8yez7',
-      'image':
-          'https://hilitemall.com/upload/store_sub_images/lOsvGv5ErAu3miqDun2zaLRwDDpc9nPzKGntJqNY.jpeg'
+      'image': 'assets/images/HiLite.jpeg'
     },
     {
       'name': 'S-M-street',
@@ -19,24 +18,21 @@ class ExploreScreen extends StatelessWidget {
           '''This place is known as Mittai Theruvu or SM Street is one of the most popular and historic trade centers in calicut. 
       This is one of the most busiest streets''',
       'location': 'https://maps.app.goo.gl/AwMmPP9R5MSvAr4D8',
-      'image':
-          'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/72/96/b5/img-20180903-151209-largejpg.jpg?w=1200&h=-1&s=1'
+      'image': 'assets/images/sm-street.jpg'
     },
     {
       'name': 'Kozhikode beach',
       'description': '''Kozhikode Beach is a favourite haunt of sunset viewers.
                      It is also a prime location for seafood lovers as it provides a wide variety of delicacies''',
       'location': 'https://maps.app.goo.gl/F9evHcmLxq3YFnNx9',
-      'image':
-          'https://www.shutterstock.com/image-photo/colorful-beach-sunset-view-kozhikode-260nw-2106574919.jpg'
+      'image': 'assets/images/kozhikode_beach.jpg'
     },
     {
       'name': 'Kariyathumpara',
       'description':
           'Kariathumpara is a beautiful cool place, almost like a hill station',
       'location': 'https://maps.app.goo.gl/F9evHcmLxq3YFnNx9',
-      'image':
-          'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/75/92/24/kariyathumpara.jpg?w=1200&h=-1&s=1'
+      'image': 'assets/images/kariyathumpara.jpg'
     },
   ];
 
@@ -45,27 +41,28 @@ class ExploreScreen extends StatelessWidget {
       'name': 'Paragon Restaurant',
       'description': 'Famous for traditional Malabar cuisine',
       'location': 'https://maps.app.goo.gl/rB2JsxJyEUznDQFQ6',
-      'image':
-          'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/64/1a/cb/hotel-paragon-restaurant.jpg?w=700&h=400&s=1'
+      'image': 'assets/images/paragon.jpg'
     },
     {
-      'name': 'Rahmat hotel',
+      'name': 'Rahamat hotel',
       'description':
           'Known for its famous beef biryani and traditional Kerala meals.',
       'location': 'https://maps.app.goo.gl/NzE2zDVjwiBJ8hkF7',
-      'image':
-          'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/7b/0a/51/hotel-rahamth.jpg?w=900&h=-1&s=1'
+      'image': 'assets/images/hotel-rahamth.jpg'
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = Color.fromARGB(255, 227, 252, 222);
+    final backgroundColor = Color.fromARGB(255, 232, 245, 233);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: Text("Let's Explore Kozhikode"),
+        title: Text(
+          "Let's Explore Kozhikode",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(1.0),
           child: Container(
@@ -93,8 +90,8 @@ class ExploreScreen extends StatelessWidget {
                   itemCount: places.length,
                   itemBuilder: (context, index) {
                     return Card(
-                      color: backgroundColor,
-                      elevation: 0,
+                      color: Color.fromARGB(255, 212, 246, 167),
+                      elevation: 1,
                       margin: EdgeInsets.only(bottom: 12),
                       child: InkWell(
                         onTap: () => _showDetails(context, places[index]),
@@ -102,7 +99,7 @@ class ExploreScreen extends StatelessWidget {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(5),
-                              child: Image.network(
+                              child: Image.asset(
                                 places[index]['image']!,
                                 height: 180,
                                 width: double.infinity,
@@ -130,20 +127,20 @@ class ExploreScreen extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 14),
                 Text(
                   'Food Spots',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 14),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: foodSpots.length,
                   itemBuilder: (context, index) {
                     return Card(
-                      color: backgroundColor,
-                      elevation: 0,
+                      color: Color.fromARGB(255, 212, 246, 167),
+                      elevation: 1,
                       margin: EdgeInsets.only(bottom: 12),
                       child: InkWell(
                         onTap: () => _showDetails(context, foodSpots[index]),
@@ -151,7 +148,7 @@ class ExploreScreen extends StatelessWidget {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(5),
-                              child: Image.network(
+                              child: Image.asset(
                                 foodSpots[index]['image']!,
                                 height: 180,
                                 width: double.infinity,
@@ -192,7 +189,7 @@ class ExploreScreen extends StatelessWidget {
       context: context,
       builder: (context) => Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -200,8 +197,8 @@ class ExploreScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Image.network(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
                   item['image']!,
                   height: 200,
                   fit: BoxFit.cover,
@@ -211,7 +208,7 @@ class ExploreScreen extends StatelessWidget {
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: Icon(Icons.image, size: 50),
+                    child: const Icon(Icons.image, size: 50),
                   ),
                 ),
               ),

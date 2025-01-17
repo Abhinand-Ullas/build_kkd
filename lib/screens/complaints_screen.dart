@@ -33,7 +33,10 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
     return Scaffold(
       backgroundColor: Color(0xFFE8F5E9),
       appBar: AppBar(
-        title: Text('Kozhikode Panchayath Complaints'),
+        title: Text(
+          'Kozhikode Panchayath Complaints',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Color(0xFFE8F5E9),
       ),
       body: Padding(

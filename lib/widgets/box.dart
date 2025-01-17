@@ -34,7 +34,7 @@ class Box extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.lightGreen[100],
+        color: Color.fromARGB(255, 212, 246, 167),
         borderRadius: BorderRadius.circular(16),
       ),
       child: GestureDetector(

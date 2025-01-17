@@ -14,9 +14,16 @@ class _ReportScreenState extends State<ReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Report an Issue'),
+        title: Text('Report an Issue', style: TextStyle(fontWeight: FontWeight.bold),),
         backgroundColor: Color(0xFFE8F5E9),
         elevation: 0,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Container(
+            color: Color.fromARGB(255, 132, 155, 102),
+            height: 2.0,
+          ),
+        ),  
       ),
       body: ComplaintsPage(),
     );

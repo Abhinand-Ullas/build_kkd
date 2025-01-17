@@ -39,15 +39,9 @@ class SupportPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
-        title: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            "Support",
-            style: TextStyle(
-              fontSize: 32,
-              color: Colors.black,
-            ),
-          ),
+        title: Text(
+          "Support",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(1.0),
@@ -91,7 +85,8 @@ class SupportPage extends StatelessWidget {
                 child: Text(
                   "Services",
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
